@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_about" />
+        <item
+            android:id="@+id/nav_park_list"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_park_list" />
+        <item
+            android:id="@+id/nav_park_map"
+            android:title="@string/menu_park_map" />
+        <item
+            android:id="@+id/nav_amenity_search"
+            android:title="@string/menu_amenity_search" />
+        <item
+            android:id="@+id/nav_donate"
+            android:title="@string/menu_donate" />
+        <item
+            android:id="@+id/nav_contact"
+            android:checkable="false"
+            android:title="@string/menu_contact" />
+    </group>
+</menu>
