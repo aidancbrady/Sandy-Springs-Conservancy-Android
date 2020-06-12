@@ -28,6 +28,8 @@ public class HomeFragment extends Fragment {
                 .setOnClickListener(v -> open(v, R.id.nav_park_map));
         root.findViewById(R.id.amenity_search_button)
                 .setOnClickListener(v -> open(v, R.id.nav_amenity_search));
+        root.findViewById(R.id.list_button)
+                .setOnClickListener(v -> open(v, R.id.nav_park_list));
         return root;
     }
 

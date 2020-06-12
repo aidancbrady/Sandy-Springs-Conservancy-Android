@@ -1,8 +1,13 @@
 package com.aidancbrady.sandyspringsconservancy;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
+import com.aidancbrady.sandyspringsconservancy.core.Constants;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -48,5 +53,17 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void onContactClicked(MenuItem item) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:" + Constants.DEV_EMAIL));
+        startActivity(intent);
+    }
+
+    public void onDonateClicked(MenuItem item) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(Constants.DONATE_SITE));
+        startActivity(intent);
     }
 }

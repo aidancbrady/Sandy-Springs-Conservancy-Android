@@ -24,10 +24,12 @@
             android:title="@string/menu_amenity_search" />
         <item
             android:id="@+id/nav_donate"
+            android:onClick="onDonateClicked"
             android:title="@string/menu_donate" />
         <item
             android:id="@+id/nav_contact"
             android:checkable="false"
+            android:onClick="onContactClicked"
             android:title="@string/menu_contact" />
     </group>
 </menu>

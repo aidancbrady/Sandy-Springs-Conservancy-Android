@@ -22,19 +22,16 @@
         android:name="com.aidancbrady.sandyspringsconservancy.MapFragment"
         android:label="@string/menu_park_map"
         tools:layout="@layout/fragment_map" />
+
     <fragment
         android:id="@+id/nav_park_list"
-        android:name="com.aidancbrady.sandyspringsconservancy.ui.slideshow.SlideshowFragment"
+        android:name="com.aidancbrady.sandyspringsconservancy.ui.ParkListFragment"
         android:label="@string/menu_park_list"
         tools:layout="@layout/fragment_park_list" />
+
     <fragment
         android:id="@+id/nav_amenity_search"
         android:name="com.aidancbrady.sandyspringsconservancy.AmenitySearchFragment"
         android:label="@string/menu_amenity_search"
         tools:layout="@layout/fragment_amenity_search" />
-    <fragment
-        android:id="@+id/nav_donate"
-        android:name="com.aidancbrady.sandyspringsconservancy.DonateFragment"
-        android:label="@string/menu_donate"
-        tools:layout="@layout/fragment_donate" />
 </navigation>
