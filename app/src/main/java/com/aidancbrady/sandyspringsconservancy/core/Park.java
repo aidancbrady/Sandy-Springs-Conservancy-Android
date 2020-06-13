@@ -55,6 +55,11 @@ public class Park {
         return new LatLng(Double.parseDouble(coordX), Double.parseDouble(coordY));
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     public static Park parse(JSONObject obj) throws Exception {
         Park ret = new Park();
         ret.name = obj.getString("name");

@@ -1,34 +1,67 @@
 package com.aidancbrady.sandyspringsconservancy.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import androidx.navigation.Navigation;
 
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataCache;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
+import com.aidancbrady.sandyspringsconservancy.core.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ParkListFragment extends ListFragment {
+
+    private ParkListAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setListAdapter(new ParkListAdapter());
+        setListAdapter(listAdapter = new ParkListAdapter(getContext()));
+        listAdapter.sort((c1, c2) ->
+                Float.compare(Utilities.distance(DataCache.lastLocation, c1.getLatLng()),
+                              Utilities.distance(DataCache.lastLocation, c2.getLatLng())));
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EditText searchField = getView().findViewById(R.id.inputSearch);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        view.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(((Activity) getContext()).getCurrentFocus().getWindowToken(), 0);
+            }
+        });
     }
 
     @Override
@@ -38,39 +71,27 @@ public class ParkListFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView list, View v, int position, long id) {
+    public void onListItemClick(@NonNull ListView list, @NonNull View v, int position, long id) {
         Bundle bundle = new Bundle();
         bundle.putInt("parkIndex", position);
         Navigation.findNavController(v).navigate(R.id.nav_park, bundle);
     }
 
-    private class ParkListAdapter extends BaseAdapter {
+    private static class ParkListAdapter extends ArrayAdapter<Park> {
 
-        private List<Park> list = new ArrayList<>(DataCache.parkList);
-
-        @Override
-        public int getCount() {
-            return list.size();
+        public ParkListAdapter(Context context) {
+            super(context, R.layout.item_park, new ArrayList<>(DataCache.parkList));
         }
 
+        @NonNull
         @Override
-        public Object getItem(int i) {
-            return list.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup parent) {
+        public View getView(int i, View view, @NonNull ViewGroup parent) {
             if (view == null) {
                 view = LayoutInflater.from(getContext()).
                         inflate(R.layout.item_park, parent, false);
             }
 
-            Park park = list.get(i);
+            Park park = getItem(i);
             TextView nameText = view.findViewById(R.id.title_text);
             TextView phoneText = view.findViewById(R.id.phone_text);
             TextView distanceText = view.findViewById(R.id.distance_text);
@@ -78,7 +99,10 @@ public class ParkListFragment extends ListFragment {
 
             nameText.setText(park.getName());
             phoneText.setText(park.getPhoneNumber());
-            distanceText.setText("TODO fix distance");
+            System.out.println(park.getLatLng() + " " + DataCache.lastLocation);
+            double dist = Math.round(Utilities.distanceInMiles(park.getLatLng(), DataCache.lastLocation));
+            dist = Math.round(dist * 100) / 100D;
+            distanceText.setText(dist + " miles away");
             if (park.getImages().size() > 0) {
                 imageView.setImageBitmap(park.getImages().get(0));
             }

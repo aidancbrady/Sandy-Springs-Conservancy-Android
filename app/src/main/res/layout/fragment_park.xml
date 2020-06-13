@@ -7,14 +7,14 @@
     <LinearLayout
         android:id="@+id/park_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".ui.ParkFragment">
 
         <HorizontalScrollView
             android:id="@+id/imageScroll"
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/imageLinearLayout"
@@ -27,10 +27,10 @@
             android:id="@+id/descriptionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
             android:text="TextView"
             android:textSize="18sp" />
 
@@ -44,6 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingLeft="16sp"
+                android:paddingBottom="8sp"
                 android:text="@string/label_phone"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -53,6 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingLeft="4sp"
+                android:paddingBottom="8sp"
                 android:text="TextView"
                 android:textSize="18sp" />
 
@@ -69,6 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingLeft="16sp"
+            android:paddingTop="8sp"
+            android:paddingBottom="8sp"
             android:text="@string/label_map"
             android:textSize="18sp"
             android:textStyle="bold" />

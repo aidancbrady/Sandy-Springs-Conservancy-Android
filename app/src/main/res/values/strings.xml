@@ -18,4 +18,10 @@
 
     <string name="label_phone">Phone: </string>
     <string name="label_map">Map:</string>
+
+    <string name="search_parks">Search parks...</string>
+
+    <string name="gps_perm_title">Location Services</string>
+    <string name="gps_perm_text">Would you like to enable location services? This will allow for us to determine which parks are near you.</string>
+    <string name="gps_perm_confirm">Allow</string>
 </resources>

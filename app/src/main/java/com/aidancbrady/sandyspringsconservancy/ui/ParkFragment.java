@@ -1,6 +1,7 @@
 package com.aidancbrady.sandyspringsconservancy.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,14 +44,19 @@ public class ParkFragment extends Fragment {
 
         if (getArguments() != null) {
             park = DataCache.parkList.get(getArguments().getInt("parkIndex"));
+            // set title to park name
             ((MenuActivity) getActivity()).getSupportActionBar().setTitle(park.getName());
             LinearLayout layout = getView().findViewById(R.id.park_layout);
+
             LinearLayout imageLayout = getView().findViewById(R.id.imageLinearLayout);
             for (int i = 0; i < park.getImages().size(); i++) {
                 ImageView imageView = new ImageView(getContext());
                 imageView.setId(i);
                 imageView.setImageBitmap(park.getImages().get(i));
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+                int height = (int) (width * 9D / 16D);
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
                 imageLayout.addView(imageView);
             }
 
