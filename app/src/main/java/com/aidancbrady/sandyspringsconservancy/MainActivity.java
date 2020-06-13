@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
+
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        new Thread(() -> new DataHandler(this).loadData()).start();
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

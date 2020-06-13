@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_park_map"
-        android:name="com.aidancbrady.sandyspringsconservancy.MapFragment"
+        android:name="com.aidancbrady.sandyspringsconservancy.ui.MapFragment"
         android:label="@string/menu_park_map"
         tools:layout="@layout/fragment_map" />
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_amenity_search"
-        android:name="com.aidancbrady.sandyspringsconservancy.AmenitySearchFragment"
+        android:name="com.aidancbrady.sandyspringsconservancy.ui.AmenitySearchFragment"
         android:label="@string/menu_amenity_search"
         tools:layout="@layout/fragment_amenity_search" />
 </navigation>

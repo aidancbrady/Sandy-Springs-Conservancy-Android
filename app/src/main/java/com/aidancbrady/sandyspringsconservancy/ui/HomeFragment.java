@@ -1,19 +1,19 @@
 package com.aidancbrady.sandyspringsconservancy.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
-import com.aidancbrady.sandyspringsconservancy.MapFragment;
 import com.aidancbrady.sandyspringsconservancy.R;
+import com.aidancbrady.sandyspringsconservancy.core.Constants;
 
 public class HomeFragment extends Fragment {
 
@@ -30,6 +30,12 @@ public class HomeFragment extends Fragment {
                 .setOnClickListener(v -> open(v, R.id.nav_amenity_search));
         root.findViewById(R.id.list_button)
                 .setOnClickListener(v -> open(v, R.id.nav_park_list));
+        root.findViewById(R.id.logo_image)
+                .setOnClickListener(v -> {
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(Constants.WEBSITE));
+                    startActivity(intent);
+                });
         return root;
     }
 
