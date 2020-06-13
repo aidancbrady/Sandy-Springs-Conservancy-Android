@@ -61,6 +61,10 @@ public class MenuActivity extends AppCompatActivity {
         navigationView.invalidate();
     }
 
+    public void setTitle(String text) {
+        this.setTitle(text);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

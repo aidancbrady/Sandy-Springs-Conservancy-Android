@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataCache;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
@@ -41,7 +42,8 @@ public class ParkFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
-            park = DataCache.parkList.get(getArguments().getInt("park"));
+            park = DataCache.parkList.get(getArguments().getInt("parkIndex"));
+            ((MenuActivity) getActivity()).getSupportActionBar().setTitle(park.getName());
             LinearLayout layout = getView().findViewById(R.id.park_layout);
             LinearLayout imageLayout = getView().findViewById(R.id.imageLinearLayout);
             for (int i = 0; i < park.getImages().size(); i++) {
@@ -86,8 +88,26 @@ public class ParkFragment extends Fragment {
 
     @Override
     public void onResume() {
-        mapView.onResume();
         super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
     }
 
     @Override
@@ -103,9 +123,14 @@ public class ParkFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_park, container, false);
     }
 }

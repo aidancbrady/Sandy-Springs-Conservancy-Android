@@ -3,6 +3,7 @@ package com.aidancbrady.sandyspringsconservancy.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,32 +11,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aidancbrady.sandyspringsconservancy.R;
+import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private static final LatLng CENTER_COORDS = new LatLng(33.934774, -84.392127);
 
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    private OnMapReadyCallback callback = googleMap -> {
+        for (int i = 0; i < DataCache.parkList.size(); i++) {
+            Park park = DataCache.parkList.get(i);
+            googleMap.addMarker(new MarkerOptions().position(park.getLatLng())
+                    .title(park.getName()).snippet(park.getAddress()));
         }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER_COORDS, 12));
+        googleMap.setOnInfoWindowClickListener(marker -> {
+            int index = DataCache.getParkIndex(marker.getTitle());
+            Bundle bundle = new Bundle();
+            bundle.putInt("parkIndex", index);
+            Navigation.findNavController(getView()).navigate(R.id.nav_park, bundle);
+        });
     };
 
     @Nullable
