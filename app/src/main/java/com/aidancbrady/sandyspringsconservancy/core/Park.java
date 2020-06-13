@@ -25,6 +25,22 @@ public class Park {
         images.add(bitmap);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPhoneNumber() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public List<String> getImageURLs() {
         return imageURLs;
     }

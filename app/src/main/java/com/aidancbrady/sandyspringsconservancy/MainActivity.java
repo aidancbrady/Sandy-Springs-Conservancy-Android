@@ -19,8 +19,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        new Thread(() -> new DataHandler(this).loadData()).start();
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+        new Thread(() -> {
+            new DataHandler(this).loadData();
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+        }).start();
     }
 }
