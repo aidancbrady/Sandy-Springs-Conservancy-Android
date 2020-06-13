@@ -50,7 +50,6 @@ public class DataHandler {
             JSONObject remoteData = parseJSON(readURL(Constants.DATA_FILE_URL));
             if (remoteData != null) {
                 int remoteVersion = getVersion(remoteData);
-                System.out.println(remoteVersion + " " + storedVersion);
                 if (remoteVersion != -1 && storedVersion != remoteVersion) {
                     return loadRemoteData(remoteData);
                 }

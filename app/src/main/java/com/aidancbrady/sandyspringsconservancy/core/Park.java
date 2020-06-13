@@ -2,6 +2,8 @@ package com.aidancbrady.sandyspringsconservancy.core;
 
 import android.graphics.Bitmap;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -43,6 +45,14 @@ public class Park {
 
     public List<String> getImageURLs() {
         return imageURLs;
+    }
+
+    public List<Bitmap> getImages() {
+        return images;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(Double.parseDouble(coordX), Double.parseDouble(coordY));
     }
 
     public static Park parse(JSONObject obj) throws Exception {

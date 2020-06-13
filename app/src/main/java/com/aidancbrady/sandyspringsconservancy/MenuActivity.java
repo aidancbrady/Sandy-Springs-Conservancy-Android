@@ -5,9 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 
 import com.aidancbrady.sandyspringsconservancy.core.Constants;
+import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -30,6 +33,7 @@ public class MenuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.activity_menu);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -39,6 +43,22 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        Menu menu = navigationView.getMenu();
+        SubMenu subMenu = menu.addSubMenu("Parks");
+        for (int i = 0; i < DataCache.parkList.size(); i++) {
+            Park park = DataCache.parkList.get(i);
+            MenuItem menuItem = subMenu.add(park.getName());
+            final int index = i;
+            menuItem.setOnMenuItemClickListener(item -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt("parkIndex", index);
+                navController.navigate(R.id.nav_park, bundle);
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                return true;
+            });
+        }
+        navigationView.invalidate();
     }
 
     @Override

@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.Navigation;
 
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataCache;
@@ -37,9 +39,9 @@ public class ParkListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView list, View v, int position, long id) {
-        Toast.makeText(getActivity(),
-                getListView().getItemAtPosition(position).toString(),
-                Toast.LENGTH_LONG).show();
+        Bundle bundle = new Bundle();
+        bundle.putInt("parkIndex", position);
+        Navigation.findNavController(v).navigate(R.id.nav_park, bundle);
     }
 
     private class ParkListAdapter extends BaseAdapter {
@@ -48,7 +50,6 @@ public class ParkListFragment extends ListFragment {
 
         @Override
         public int getCount() {
-            System.out.println(list.size());
             return list.size();
         }
 
@@ -73,10 +74,14 @@ public class ParkListFragment extends ListFragment {
             TextView nameText = view.findViewById(R.id.title_text);
             TextView phoneText = view.findViewById(R.id.phone_text);
             TextView distanceText = view.findViewById(R.id.distance_text);
+            ImageView imageView = view.findViewById(R.id.image_view);
 
             nameText.setText(park.getName());
             phoneText.setText(park.getPhoneNumber());
             distanceText.setText("TODO fix distance");
+            if (park.getImages().size() > 0) {
+                imageView.setImageBitmap(park.getImages().get(0));
+            }
             return view;
         }
     }

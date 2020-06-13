@@ -34,4 +34,10 @@
         android:name="com.aidancbrady.sandyspringsconservancy.ui.AmenitySearchFragment"
         android:label="@string/menu_amenity_search"
         tools:layout="@layout/fragment_amenity_search" />
+
+    <fragment
+        android:id="@+id/nav_park"
+        android:name="com.aidancbrady.sandyspringsconservancy.ui.ParkFragment"
+        android:label="@string/menu_park_list"
+        tools:layout="@layout/fragment_park" />
 </navigation>
