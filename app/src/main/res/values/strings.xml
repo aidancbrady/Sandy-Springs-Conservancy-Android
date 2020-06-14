@@ -13,13 +13,13 @@
     <string name="menu_amenity_search">Amenity Search</string>
     <string name="menu_donate">Donate</string>
     <string name="menu_contact">Contact &amp; Support</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_parks">Parks</string>
 
     <string name="label_phone">Phone: </string>
     <string name="label_map">Map:</string>
 
     <string name="search_parks">Search parks…</string>
+    <string name="park_distance_miles">%.1f miles away</string>
     <string name="park_list_download_start">Downloading Park List…</string>
     <string name="park_list_download_fail">Download Failed.</string>
 

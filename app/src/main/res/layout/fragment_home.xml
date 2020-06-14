@@ -19,6 +19,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/blur_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FFFFFF"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="7dp" />
+
     <Button
         android:id="@+id/favorites_button"
         android:layout_width="0dp"

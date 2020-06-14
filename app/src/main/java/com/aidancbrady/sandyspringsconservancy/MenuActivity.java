@@ -12,25 +12,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
-
-import com.aidancbrady.sandyspringsconservancy.core.Constants;
-import com.aidancbrady.sandyspringsconservancy.core.DataCache;
-import com.aidancbrady.sandyspringsconservancy.core.Park;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.aidancbrady.sandyspringsconservancy.core.Constants;
+import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.Park;
+import com.aidancbrady.sandyspringsconservancy.ui.ParkFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.navigation.NavigationView;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -66,14 +66,13 @@ public class MenuActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         Menu menu = navigationView.getMenu();
-        SubMenu subMenu = menu.addSubMenu("Parks");
+        SubMenu subMenu = menu.addSubMenu(R.string.menu_parks);
         for (int i = 0; i < DataCache.parkList.size(); i++) {
             Park park = DataCache.parkList.get(i);
             MenuItem menuItem = subMenu.add(park.getName());
-            final int index = i;
             menuItem.setOnMenuItemClickListener(item -> {
                 Bundle bundle = new Bundle();
-                bundle.putInt("parkIndex", index);
+                bundle.putString(ParkFragment.PARK_BUNDLE_TAG, park.getName());
                 navController.navigate(R.id.nav_park, bundle);
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 return true;

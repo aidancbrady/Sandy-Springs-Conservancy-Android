@@ -2,7 +2,6 @@ package com.aidancbrady.sandyspringsconservancy.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,14 +72,14 @@ public class ParkListFragment extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView list, @NonNull View v, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putInt("parkIndex", position);
+        bundle.putString(ParkFragment.PARK_BUNDLE_TAG, listAdapter.getItem(position).getName());
         Navigation.findNavController(v).navigate(R.id.nav_park, bundle);
     }
 
-    private static class ParkListAdapter extends ArrayAdapter<Park> {
+    private class ParkListAdapter extends ArrayAdapter<Park> {
 
         public ParkListAdapter(Context context) {
-            super(context, R.layout.item_park, new ArrayList<>(DataCache.parkList));
+            super(context, R.layout.list_item_park, new ArrayList<>(DataCache.parkList));
         }
 
         @NonNull
@@ -88,9 +87,8 @@ public class ParkListFragment extends ListFragment {
         public View getView(int i, View view, @NonNull ViewGroup parent) {
             if (view == null) {
                 view = LayoutInflater.from(getContext()).
-                        inflate(R.layout.item_park, parent, false);
+                        inflate(R.layout.list_item_park, parent, false);
             }
-
             Park park = getItem(i);
             TextView nameText = view.findViewById(R.id.title_text);
             TextView phoneText = view.findViewById(R.id.phone_text);
@@ -102,7 +100,7 @@ public class ParkListFragment extends ListFragment {
             System.out.println(park.getLatLng() + " " + DataCache.lastLocation);
             double dist = Math.round(Utilities.distanceInMiles(park.getLatLng(), DataCache.lastLocation));
             dist = Math.round(dist * 100) / 100D;
-            distanceText.setText(dist + " miles away");
+            distanceText.setText(getString(R.string.park_distance_miles, dist));
             if (park.getImages().size() > 0) {
                 imageView.setImageBitmap(park.getImages().get(0));
             }

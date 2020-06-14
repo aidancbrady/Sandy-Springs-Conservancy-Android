@@ -46,9 +46,9 @@ public class HomeFragment extends Fragment {
                 });
 
         background = root.findViewById(R.id.backgroundImage);
-        background.setImageBitmap(DataCache.backgroundList.get(0));
-
+        background.setImageBitmap(DataCache.backgroundList.get(backgroundIndex));
         if (backgroundTimer == null) {
+
             backgroundTimer = new Timer();
             runBackgroundAnimation();
         }
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
                 background.setImageDrawable(transition);
                 transition.startTransition(500);
             }
-        }, 2000, 2000);
+        }, 5000, 5000);
     }
 
     public void onDestroy() {

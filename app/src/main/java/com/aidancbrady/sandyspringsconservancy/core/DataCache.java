@@ -14,6 +14,10 @@ public class DataCache {
 
     public static LatLng lastLocation = new LatLng(0, 0);
 
+    public static Park getPark(String parkName) {
+        return parkList.get(getParkIndex(parkName));
+    }
+
     public static int getParkIndex(String parkName) {
         for (int i = 0; i < parkList.size(); i++) {
             if (parkList.get(i).getName().equals(parkName)) {

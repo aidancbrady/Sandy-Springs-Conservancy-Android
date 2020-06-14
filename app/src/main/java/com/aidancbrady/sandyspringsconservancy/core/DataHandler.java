@@ -32,7 +32,7 @@ public class DataHandler {
 
     public boolean loadData() {
         // TODO remove
-        flushCache();
+        //flushCache();
         int storedVersion = getStoredVersion(cacheFile);
         if (storedVersion == -1) {
             if (!connected) {
