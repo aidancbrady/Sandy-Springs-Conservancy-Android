@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_about"
-        android:name="com.aidancbrady.sandyspringsconservancy.ui.GalleryFragment"
+        android:name="com.aidancbrady.sandyspringsconservancy.ui.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about" />
 
