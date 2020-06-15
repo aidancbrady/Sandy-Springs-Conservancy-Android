@@ -1,9 +1,12 @@
 package com.aidancbrady.sandyspringsconservancy.core;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -26,5 +29,14 @@ public class Utilities {
 
     public static float distanceInMiles(LatLng pos1, LatLng pos2) {
         return distance(pos1, pos2) * METERS_TO_MILES;
+    }
+
+    public static Drawable getDrawableByName(Context context, String name) {
+        name = name.toLowerCase()
+                .replace(" ", "_")
+                .replace("/", "_");
+        int id = context.getResources().getIdentifier(name, "drawable",
+                context.getPackageName());
+        return ActivityCompat.getDrawable(context, id);
     }
 }

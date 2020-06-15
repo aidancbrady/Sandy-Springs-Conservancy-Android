@@ -1,5 +1,6 @@
 package com.aidancbrady.sandyspringsconservancy.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -11,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,12 +25,15 @@ import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
+import com.aidancbrady.sandyspringsconservancy.core.Utilities;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class ParkFragment extends Fragment {
 
@@ -37,7 +43,7 @@ public class ParkFragment extends Fragment {
     private Park park;
     private MapView mapView;
 
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
@@ -70,9 +76,6 @@ public class ParkFragment extends Fragment {
                 startActivity(intent);
             });
 
-            View amenityView = getView().findViewById(R.id.amenityView);
-            amenityView.setMinimumHeight(300);
-
             mapView = getView().findViewById(R.id.mapView);
             mapView.onCreate(savedInstanceState);
             try {
@@ -89,6 +92,9 @@ public class ParkFragment extends Fragment {
                 map.animateCamera(update);
             });
             setHasOptionsMenu(true);
+
+            GridView grid = getView().findViewById(R.id.gridview);
+            grid.setAdapter(new AmenityGridAdapter(getContext(), park.getAmenities()));
         }
     }
 
@@ -157,5 +163,27 @@ public class ParkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_park, container, false);
+    }
+
+    private static class AmenityGridAdapter extends ArrayAdapter<String> {
+
+        public AmenityGridAdapter(Context context, List<String> amenities) {
+            super(context, R.layout.item_amenity, amenities);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int i, View view, @NonNull ViewGroup parent) {
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).
+                        inflate(R.layout.item_amenity, parent, false);
+            }
+            String amenity = getItem(i);
+            TextView nameText = view.findViewById(R.id.amenityLabelText);
+            ImageView imageView = view.findViewById(R.id.amenityIcon);
+            imageView.setImageDrawable(Utilities.getDrawableByName(getContext(), amenity));
+            nameText.setText(amenity);
+            return view;
+        }
     }
 }

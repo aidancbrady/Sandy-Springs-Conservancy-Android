@@ -30,7 +30,8 @@ public class AboutFragment extends Fragment {
                 return root;
             }
         }
-        webView.loadDataWithBaseURL("", htmlText, "text/html", "UTF-8", "");
+        webView.loadUrl("file:///android_asset/about.html");
+        //webView.loadDataWithBaseURL("", htmlText, "text/html", "UTF-8", "");
         return root;
     }
 

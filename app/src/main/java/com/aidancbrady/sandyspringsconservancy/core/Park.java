@@ -51,6 +51,10 @@ public class Park {
         return images;
     }
 
+    public List<String> getAmenities() {
+        return amenities;
+    }
+
     public LatLng getLatLng() {
         return new LatLng(Double.parseDouble(coordX), Double.parseDouble(coordY));
     }

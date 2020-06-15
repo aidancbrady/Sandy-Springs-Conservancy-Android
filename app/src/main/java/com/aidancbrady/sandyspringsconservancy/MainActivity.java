@@ -38,12 +38,4 @@ public class MainActivity extends AppCompatActivity {
             view.setText(R.string.park_list_download_fail);
         }
     }
-
-    public void onClick(View view) {
-        new Thread(() -> {
-            new DataLoader(this).loadData();
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
-        }).start();
-    }
 }

@@ -31,7 +31,7 @@
             android:paddingTop="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
-            android:text="TextView"
+            android:text="@null"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="16sp"
+                android:paddingRight="4sp"
                 android:paddingBottom="8sp"
                 android:text="@string/label_phone"
                 android:textSize="18sp"
@@ -56,24 +57,30 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="4sp"
+                android:paddingRight="4sp"
                 android:paddingBottom="8sp"
-                android:text="TextView"
+                android:text="@null"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/amenityView"
+        <com.aidancbrady.sandyspringsconservancy.ui.WrappingGridView
+            android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CDCDCD" />
+            android:gravity="center"
+            android:columnWidth="100dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="spacingWidthUniform"
+            />
 
         <TextView
             android:id="@+id/mapLabelText"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingLeft="16sp"
+            android:paddingRight="16sp"
             android:paddingTop="8sp"
             android:paddingBottom="8sp"
             android:text="@string/label_map"

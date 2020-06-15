@@ -15,6 +15,7 @@ public class AmenitySearchFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View amenityView = LayoutInflater.from(getContext()).inflate(R.layout.item_amenity, null);
     }
 
     @Override
