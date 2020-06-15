@@ -36,6 +36,7 @@
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>

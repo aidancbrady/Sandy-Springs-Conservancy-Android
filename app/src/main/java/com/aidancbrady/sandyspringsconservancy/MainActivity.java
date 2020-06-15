@@ -1,30 +1,16 @@
 package com.aidancbrady.sandyspringsconservancy;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.aidancbrady.sandyspringsconservancy.core.DataCache;
-import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
-import com.google.android.gms.maps.model.LatLng;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.concurrent.Executors;
+import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
+import com.aidancbrady.sandyspringsconservancy.core.DataLoader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         // use handler to run callback on main thread
         Handler handler = new Handler(getMainLooper());
         new Thread(() -> {
-            boolean ret = new DataHandler(this).loadData();
+            boolean ret = new DataLoader(this).loadData();
             handler.post(() -> callback(ret));
         }).start();
     }
@@ -45,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         TextView view = findViewById(R.id.textView);
         progress.setVisibility(View.GONE);
         if (success) {
+            DataHandler.loadFavorites(this);
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
         } else {
@@ -54,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         new Thread(() -> {
-            new DataHandler(this).loadData();
+            new DataLoader(this).loadData();
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
         }).start();

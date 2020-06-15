@@ -9,9 +9,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,15 +29,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.aidancbrady.sandyspringsconservancy.core.Constants;
-import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.aidancbrady.sandyspringsconservancy.ui.ParkFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 
+import java.lang.reflect.Field;
+
 public class MenuActivity extends AppCompatActivity {
 
     public static final int LOCATION_PERMISSION_CODE = 99;
+    private static final String LOG_TAG = "MenuActivity";
 
     private LocationManager locationManager;
     private GPSListener gpsListener = new GPSListener();
@@ -52,6 +58,7 @@ public class MenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupActionBarTitleMarquee(toolbar);
         DrawerLayout drawer = findViewById(R.id.activity_menu);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -67,8 +74,8 @@ public class MenuActivity extends AppCompatActivity {
 
         Menu menu = navigationView.getMenu();
         SubMenu subMenu = menu.addSubMenu(R.string.menu_parks);
-        for (int i = 0; i < DataCache.parkList.size(); i++) {
-            Park park = DataCache.parkList.get(i);
+        for (int i = 0; i < DataHandler.parkList.size(); i++) {
+            Park park = DataHandler.parkList.get(i);
             MenuItem menuItem = subMenu.add(park.getName());
             menuItem.setOnMenuItemClickListener(item -> {
                 Bundle bundle = new Bundle();
@@ -79,6 +86,25 @@ public class MenuActivity extends AppCompatActivity {
             });
         }
         navigationView.invalidate();
+    }
+
+    private void setupActionBarTitleMarquee(Toolbar toolbar) {
+        try {
+            Field field = toolbar.getClass().getDeclaredField("mTitleTextView");
+            field.setAccessible(true);
+            TextView titleTextView = (TextView) field.get(toolbar);
+
+            titleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            titleTextView.setFocusable(true);
+            titleTextView.setFocusableInTouchMode(true);
+            titleTextView.requestFocus();
+            titleTextView.setSingleLine(true);
+            titleTextView.setSelected(true);
+            titleTextView.setMarqueeRepeatLimit(-1);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Couldn't reflectively set up title marquee effect.");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -164,7 +190,7 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public void onLocationChanged(Location loc) {
-            DataCache.lastLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+            DataHandler.lastLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
         }
 
         @Override

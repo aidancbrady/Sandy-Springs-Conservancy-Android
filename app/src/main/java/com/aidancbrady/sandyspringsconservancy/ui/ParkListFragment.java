@@ -1,6 +1,6 @@
 package com.aidancbrady.sandyspringsconservancy.ui;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,7 +20,7 @@ import androidx.fragment.app.ListFragment;
 import androidx.navigation.Navigation;
 
 import com.aidancbrady.sandyspringsconservancy.R;
-import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.aidancbrady.sandyspringsconservancy.core.Utilities;
 
@@ -35,10 +35,11 @@ public class ParkListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         setListAdapter(listAdapter = new ParkListAdapter(getContext()));
         listAdapter.sort((c1, c2) ->
-                Float.compare(Utilities.distance(DataCache.lastLocation, c1.getLatLng()),
-                              Utilities.distance(DataCache.lastLocation, c2.getLatLng())));
+                Float.compare(Utilities.distance(DataHandler.lastLocation, c1.getLatLng()),
+                              Utilities.distance(DataHandler.lastLocation, c2.getLatLng())));
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -55,11 +56,14 @@ public class ParkListFragment extends ListFragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        view.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(((Activity) getContext()).getCurrentFocus().getWindowToken(), 0);
-            }
+        getListView().setOnTouchListener((v, event) -> {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+            return false;
+        });
+        searchField.setOnFocusChangeListener((v, hasFocus) -> {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
         });
     }
 
@@ -79,7 +83,7 @@ public class ParkListFragment extends ListFragment {
     private class ParkListAdapter extends ArrayAdapter<Park> {
 
         public ParkListAdapter(Context context) {
-            super(context, R.layout.list_item_park, new ArrayList<>(DataCache.parkList));
+            super(context, R.layout.list_item_park, new ArrayList<>(DataHandler.parkList));
         }
 
         @NonNull
@@ -97,8 +101,7 @@ public class ParkListFragment extends ListFragment {
 
             nameText.setText(park.getName());
             phoneText.setText(park.getPhoneNumber());
-            System.out.println(park.getLatLng() + " " + DataCache.lastLocation);
-            double dist = Math.round(Utilities.distanceInMiles(park.getLatLng(), DataCache.lastLocation));
+            double dist = Math.round(Utilities.distanceInMiles(park.getLatLng(), DataHandler.lastLocation));
             dist = Math.round(dist * 100) / 100D;
             distanceText.setText(getString(R.string.park_distance_miles, dist));
             if (park.getImages().size() > 0) {

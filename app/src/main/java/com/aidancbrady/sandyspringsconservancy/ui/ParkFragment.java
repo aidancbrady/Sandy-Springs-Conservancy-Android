@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
-import com.aidancbrady.sandyspringsconservancy.core.DataCache;
+import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,7 +41,7 @@ public class ParkFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
-            park = DataCache.getPark(getArguments().getString(PARK_BUNDLE_TAG));
+            park = DataHandler.getPark(getArguments().getString(PARK_BUNDLE_TAG));
             // set title to park name
             ((MenuActivity) getActivity()).getSupportActionBar().setTitle(park.getName());
 
@@ -95,14 +95,20 @@ public class ParkFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        System.out.println("add");
         MenuItem item = menu.add("favorite");
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        item.setIcon(R.drawable.baseline_favorite_border_black_18dp);
+        setFavoriteIconState(item);
         item.setOnMenuItemClickListener(i -> {
-            item.setIcon(R.drawable.baseline_favorite_black_18dp);
+            DataHandler.toggleFavorite(getActivity(), park.getName());
+            setFavoriteIconState(item);
             return true;
         });
+    }
+
+    private void setFavoriteIconState(MenuItem item) {
+        boolean favorite = DataHandler.isFavorite(park.getName());
+        item.setIcon(favorite ? R.drawable.ic_favorite_true :
+                R.drawable.ic_favorite_false);
     }
 
     @Override
