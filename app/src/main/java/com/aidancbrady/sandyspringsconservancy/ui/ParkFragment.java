@@ -51,8 +51,6 @@ public class ParkFragment extends Fragment {
             // set title to park name
             ((MenuActivity) getActivity()).getSupportActionBar().setTitle(park.getName());
 
-            LinearLayout layout = getView().findViewById(R.id.park_layout);
-
             LinearLayout imageLayout = getView().findViewById(R.id.imageLinearLayout);
             for (int i = 0; i < park.getImages().size(); i++) {
                 ImageView imageView = new ImageView(getContext());
@@ -93,7 +91,7 @@ public class ParkFragment extends Fragment {
             });
             setHasOptionsMenu(true);
 
-            GridView grid = getView().findViewById(R.id.gridview);
+            GridView grid = getView().findViewById(R.id.amenityGridView);
             grid.setAdapter(new AmenityGridAdapter(getContext(), park.getAmenities()));
         }
     }

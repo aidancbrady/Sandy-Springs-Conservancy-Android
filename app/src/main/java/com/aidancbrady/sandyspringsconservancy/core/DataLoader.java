@@ -154,7 +154,7 @@ public class DataLoader {
             for (int i = 0; i < array.length(); i++) {
                 Park park = Park.parse(array.getJSONObject(i));
                 loadImages(park, true);
-                DataHandler.parkList.add(park);
+                DataHandler.addPark(park);
             }
         } catch (Exception e) {
             Log.e(LOG_TAG, "Failed to parse parks from JSON.");

@@ -65,7 +65,7 @@
         </LinearLayout>
 
         <com.aidancbrady.sandyspringsconservancy.ui.WrappingGridView
-            android:id="@+id/gridview"
+            android:id="@+id/amenityGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

@@ -23,6 +23,13 @@ public class DataHandler {
 
     private static Set<String> favorites;
 
+    public static Set<String> amenities = new LinkedHashSet<>();
+
+    public static void addPark(Park park) {
+        parkList.add(park);
+        amenities.addAll(park.getAmenities());
+    }
+
     public static Park getPark(String parkName) {
         return parkList.get(getParkIndex(parkName));
     }
