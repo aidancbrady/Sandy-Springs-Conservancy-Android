@@ -31,8 +31,7 @@ public class DataLoader {
     }
 
     public boolean loadData() {
-        // TODO remove
-        //flushCache();
+        DataHandler.parkList.clear();
         int storedVersion = getStoredVersion(cacheFile);
         if (storedVersion == -1) {
             if (!connected) {
