@@ -19,29 +19,42 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import androidx.navigation.Navigation;
 
+import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
 import com.aidancbrady.sandyspringsconservancy.core.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParkListFragment extends ListFragment {
 
-    private ParkListAdapter listAdapter;
+    public static final String AMENITIES_BUNDLE_TAG = "amenities";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setListAdapter(listAdapter = new ParkListAdapter(getContext()));
-        listAdapter.sort((c1, c2) ->
-                Float.compare(Utilities.distance(DataHandler.lastLocation, c1.getLatLng()),
-                              Utilities.distance(DataHandler.lastLocation, c2.getLatLng())));
-    }
+    private ParkListAdapter listAdapter;
 
     @SuppressLint("ClickableViewAccessibility")
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        List<Park> parks = new ArrayList<>(DataHandler.parkList);
+        if (getArguments() != null) {
+            List<String> amenities = getArguments().getStringArrayList(AMENITIES_BUNDLE_TAG);
+            if (amenities != null) {
+                parks = DataHandler.getParksWithAmenities(amenities);
+            }
+        }
+
+        setListAdapter(listAdapter = new ParkListAdapter(getContext(), parks));
+        listAdapter.sort((c1, c2) ->
+                Float.compare(Utilities.distance(DataHandler.lastLocation, c1.getLatLng()),
+                        Utilities.distance(DataHandler.lastLocation, c2.getLatLng())));
+
+        View  emptyView = getActivity().getLayoutInflater().inflate(R.layout.list_empty_view, null);
+
+        ((ViewGroup)getListView().getParent()).addView(emptyView);
+        getListView().setEmptyView(emptyView);
 
         EditText searchField = getView().findViewById(R.id.inputSearch);
         searchField.addTextChangedListener(new TextWatcher() {
@@ -80,10 +93,16 @@ public class ParkListFragment extends ListFragment {
         Navigation.findNavController(v).navigate(R.id.nav_park, bundle);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MenuActivity) getActivity()).setMenuState(false);
+    }
+
     private class ParkListAdapter extends ArrayAdapter<Park> {
 
-        public ParkListAdapter(Context context) {
-            super(context, R.layout.list_item_park, new ArrayList<>(DataHandler.parkList));
+        public ParkListAdapter(Context context, List<Park> parks) {
+            super(context, R.layout.list_item_park, parks);
         }
 
         @NonNull

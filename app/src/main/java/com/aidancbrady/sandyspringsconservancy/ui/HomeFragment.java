@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.Constants;
 import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
@@ -95,6 +96,12 @@ public class HomeFragment extends Fragment {
         });
         anim.setDuration(500);
         anim.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MenuActivity) getActivity()).setMenuState(true);
     }
 
     private void runBackgroundAnimation() {

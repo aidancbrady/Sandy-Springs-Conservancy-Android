@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.aidancbrady.sandyspringsconservancy.MenuActivity;
 import com.aidancbrady.sandyspringsconservancy.R;
 import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
@@ -36,6 +37,12 @@ public class MapFragment extends Fragment {
             Navigation.findNavController(getView()).navigate(R.id.nav_park, bundle);
         });
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MenuActivity) getActivity()).setMenuState(false);
+    }
 
     @Nullable
     @Override

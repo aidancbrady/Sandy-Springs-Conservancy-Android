@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -45,6 +46,9 @@ public class MenuActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private GPSListener gpsListener = new GPSListener();
 
+    private DrawerLayout drawerLayout;
+    private boolean showMenu;
+
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -59,14 +63,16 @@ public class MenuActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupActionBarTitleMarquee(toolbar);
-        DrawerLayout drawer = findViewById(R.id.activity_menu);
+        drawerLayout = findViewById(R.id.activity_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_about, R.id.nav_park_list)
-                .setDrawerLayout(drawer)
+                .setDrawerLayout(drawerLayout)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -81,11 +87,34 @@ public class MenuActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(ParkFragment.PARK_BUNDLE_TAG, park.getName());
                 navController.navigate(R.id.nav_park, bundle);
-                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 return true;
             });
         }
         navigationView.invalidate();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (!showMenu) {
+                onBackPressed();
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setMenuState(boolean showMenu) {
+        this.showMenu = showMenu;
+        if(!showMenu) {
+            // Enables back button icon
+            // passing null or 0 brings back the <- icon
+            getSupportActionBar().setHomeAsUpIndicator(null);
+        }
     }
 
     private void setupActionBarTitleMarquee(Toolbar toolbar) {

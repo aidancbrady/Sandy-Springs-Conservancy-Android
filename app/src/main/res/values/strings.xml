@@ -17,9 +17,13 @@
 
     <string name="label_phone">Phone: </string>
     <string name="label_map">Map:</string>
+    <string name="label_amenity_search">Tap desired amenities:</string>
 
     <string name="search_parks">Search parks…</string>
+    <string name="search">Search</string>
+    <string name="list_empty">No parks matched in search.</string>
     <string name="park_distance_miles">%.1f miles away</string>
+
     <string name="park_list_download_start">Downloading Park List…</string>
     <string name="park_list_download_fail">Download Failed.</string>
 

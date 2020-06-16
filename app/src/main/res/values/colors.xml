@@ -6,4 +6,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorPrimaryAlpha">#881C6424</color>
     <color name="colorActionBar">#5A9461</color>
+    <color name="colorBackground">?android:colorBackground</color>
 </resources>

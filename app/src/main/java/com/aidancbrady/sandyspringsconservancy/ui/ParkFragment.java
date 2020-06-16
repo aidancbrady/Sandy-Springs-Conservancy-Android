@@ -118,6 +118,7 @@ public class ParkFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((MenuActivity) getActivity()).setMenuState(false);
         mapView.onResume();
     }
 

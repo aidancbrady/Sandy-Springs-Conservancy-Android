@@ -43,6 +43,20 @@ public class DataHandler {
         return -1;
     }
 
+    public static List<Park> getParksWithAmenities(List<String> amenities) {
+        List<Park> ret = new ArrayList<>();
+        loop:
+        for (Park park : parkList) {
+            for (String amenity : amenities) {
+                if (!park.getAmenities().contains(amenity)) {
+                    continue loop;
+                }
+            }
+            ret.add(park);
+        }
+        return ret;
+    }
+
     public static void loadFavorites(Activity activity) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
         favorites = new LinkedHashSet<>(sharedPref.getStringSet(FAVORITES_TAG, new LinkedHashSet<>()));
