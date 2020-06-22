@@ -5,12 +5,16 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
+import com.aidancbrady.sandyspringsconservancy.BuildConfig;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Utilities {
+
+    public static boolean DEBUG = BuildConfig.DEBUG;
 
     private static final float METERS_TO_MILES = 0.000621371F;
 
@@ -38,5 +42,22 @@ public class Utilities {
         int id = context.getResources().getIdentifier(name, "drawable",
                 context.getPackageName());
         return ActivityCompat.getDrawable(context, id);
+    }
+
+    public static void debug(String tag, String s) {
+        if (DEBUG) {
+            Log.d(tag, s);
+        }
+    }
+
+    public static void warn(String tag, String s) {
+        if (DEBUG) {
+            Log.w(tag, s);
+        }
+    }
+    public static void error(String tag, String s) {
+        if (DEBUG) {
+            Log.e(tag, s);
+        }
     }
 }

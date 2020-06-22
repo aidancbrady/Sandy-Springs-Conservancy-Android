@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -32,6 +31,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.aidancbrady.sandyspringsconservancy.core.Constants;
 import com.aidancbrady.sandyspringsconservancy.core.DataHandler;
 import com.aidancbrady.sandyspringsconservancy.core.Park;
+import com.aidancbrady.sandyspringsconservancy.core.Utilities;
 import com.aidancbrady.sandyspringsconservancy.ui.ParkFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
@@ -131,7 +131,7 @@ public class MenuActivity extends AppCompatActivity {
             titleTextView.setSelected(true);
             titleTextView.setMarqueeRepeatLimit(-1);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Couldn't reflectively set up title marquee effect.");
+            Utilities.error(LOG_TAG, "Couldn't reflectively set up title marquee effect.");
             e.printStackTrace();
         }
     }

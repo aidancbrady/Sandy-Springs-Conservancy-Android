@@ -31,6 +31,7 @@ public class DataLoader {
     }
 
     public boolean loadData() {
+        // clear the park list in case we somehow reloaded data
         DataHandler.parkList.clear();
         int storedVersion = getStoredVersion(cacheFile);
         if (storedVersion == -1) {
@@ -70,7 +71,7 @@ public class DataLoader {
             loadSecondaryImages();
             return true;
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error loading local data.");
+            Utilities.error(LOG_TAG, "Error loading local data.");
             e.printStackTrace();
             return false;
         }
@@ -86,7 +87,7 @@ public class DataLoader {
             loadSecondaryImages();
             return true;
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error loading remote data.");
+            Utilities.error(LOG_TAG, "Error loading remote data.");
             e.printStackTrace();
             return false;
         }
@@ -135,7 +136,7 @@ public class DataLoader {
                 didInitial = true;
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to load images.");
+            Utilities.error(LOG_TAG, "Failed to load images.");
             e.printStackTrace();
         }
     }
@@ -156,7 +157,7 @@ public class DataLoader {
                 DataHandler.addPark(park);
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to parse parks from JSON.");
+            Utilities.error(LOG_TAG, "Failed to parse parks from JSON.");
             e.printStackTrace();
         }
     }
@@ -167,7 +168,8 @@ public class DataLoader {
             fos.write(contents);
             fos.close();
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error writing to file " + file);
+            Utilities.error(LOG_TAG, "Error writing to file " + file);
+            e.printStackTrace();
         }
     }
 
@@ -201,7 +203,7 @@ public class DataLoader {
             fos.close();
             return bytes;
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error loading file " + file.getAbsolutePath());
+            Utilities.error(LOG_TAG, "Error loading file " + file.getAbsolutePath());
             e.printStackTrace();
             return null;
         }
@@ -219,7 +221,7 @@ public class DataLoader {
             }
             return output.toByteArray();
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error reading from URL " + textURL);
+            Utilities.error(LOG_TAG, "Error reading from URL " + textURL);
             e.printStackTrace();
             return null;
         }
@@ -230,7 +232,7 @@ public class DataLoader {
             String text = new String(bytes);
             return new JSONObject(text);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error parsing JSON from bytes.");
+            Utilities.error(LOG_TAG, "Error parsing JSON from bytes.");
             e.printStackTrace();
             return null;
         }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -79,7 +78,7 @@ public class ParkFragment extends Fragment {
             try {
                 MapsInitializer.initialize(getActivity());
             } catch (Exception e) {
-                Log.e(LOG_TAG, "Error initializing map.");
+                Utilities.error(LOG_TAG, "Error initializing map.");
                 e.printStackTrace();
             }
             mapView.getMapAsync(map -> {

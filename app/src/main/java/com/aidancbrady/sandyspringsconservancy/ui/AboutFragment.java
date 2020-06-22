@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class AboutFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_about, container, false);
         WebView webView = root.findViewById(R.id.webView);
+        webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl("file:///android_asset/about.html");
         return root;
     }
