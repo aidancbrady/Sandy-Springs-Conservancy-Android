@@ -6,13 +6,8 @@ public class Constants {
     public static final String CACHE_DIR = "/CacheDownloads";
     public static final String DATA_FILE = "conservancy.json";
 
-    public static final String DATA_URL = "http://server.aidancbrady.com/sandysprings/";
+    public static final String DATA_URL = "http://app.sandyspringsconservancy.org/";
     public static final String DATA_FILE_URL = DATA_URL + DATA_FILE;
-
-    // server information
-    public static final String SPLITTER = ":";
-    public static final int PORT = 26840;
-    public static final String IP = "server.aidancbrady.com";
 
     // sandy springs info
     public static final String WEBSITE = "https://sandyspringsconservancy.org";
