@@ -9,9 +9,9 @@ public class Constants {
     public static final String DATA_URL = "http://app.sandyspringsconservancy.org/";
     public static final String DATA_FILE_URL = DATA_URL + DATA_FILE;
 
-    // sandy springs info
-    public static final String WEBSITE = "https://sandyspringsconservancy.org";
-    public static final String DONATE_SITE = "https://sandyspringsconservancy.org/join-us/donate/";
+    // sandy springs info, mutated by DataLoader
+    public static String WEBSITE = "https://www.sandyspringsconservancy.org";
+    public static String DONATE_SITE = "https://www.sandyspringsconservancy.org/waystodonate/";
 
     // misc info
     public static final String DEV_EMAIL = "me@aidancbrady.com";

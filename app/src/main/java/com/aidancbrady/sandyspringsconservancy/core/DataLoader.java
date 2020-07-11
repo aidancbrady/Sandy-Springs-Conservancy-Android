@@ -2,10 +2,9 @@ package com.aidancbrady.sandyspringsconservancy.core;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
-import android.util.Log;
-
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -65,6 +64,7 @@ public class DataLoader {
             return false;
         }
         try {
+            loadProperties(obj);
             loadBackgrounds(obj);
             JSONArray parksArray = obj.getJSONArray("parks");
             loadParks(parksArray);
@@ -81,6 +81,7 @@ public class DataLoader {
         try {
             flushCache();
             writeToFile(cacheFile, remoteData.toString().getBytes());
+            loadProperties(remoteData);
             loadBackgrounds(remoteData);
             JSONArray parksArray = remoteData.getJSONArray("parks");
             loadParks(parksArray);
@@ -101,6 +102,12 @@ public class DataLoader {
         } else {
             cacheDir.mkdirs();
         }
+    }
+
+    private void loadProperties(JSONObject data) throws JSONException {
+        Constants.WEBSITE = data.getString("website_url");
+        Constants.DONATE_SITE = data.getString("donate_url");
+        System.out.println(data.getString("donate_url"));
     }
 
     private void loadBackgrounds(JSONObject data) throws Exception {
